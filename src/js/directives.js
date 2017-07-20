@@ -2,7 +2,7 @@
 (function() {
 	//头部组件
 	var directives = angular.module('directives', [])
-	directives.directive('xheader', ['$window','$rootScope', function($window,$rootScope) {
+	directives.directive('xheader', ['$window', '$rootScope', function($window, $rootScope) {
 		return {
 			templateUrl: "directive/xheader.html",
 			link: function(scope, ele, attr) {
@@ -17,7 +17,7 @@
 				//点击出现侧边栏,出现遮罩层
 				$rootScope.sidebarstate = false;
 				$rootScope.sidebarstateOut = false;
-				scope.sideIn=function(){
+				scope.sideIn = function() {
 					console.log(scope.sidebarstate)
 					$rootScope.sidebarstateOut = false;
 					$rootScope.sidebarstate = true;
@@ -26,10 +26,10 @@
 		}
 	}])
 	//footer组件
-	directives.directive('xfooter', function() {		
+	directives.directive('xfooter', function() {
 		return {
 			templateUrl: "directive/xfooter.html",
-			link: function(scope, ele, attr) {		
+			link: function(scope, ele, attr) {
 				console.log("footer加载")
 				scope.nav = [{
 					ionClass: 'icon-wxbpinpaibao',
@@ -86,8 +86,9 @@
 				scope.loadingRemove = function() {
 					$timeout(function() {
 						scope.allLoading = 0
-					}, 2000)
+					}, 5000)
 				}
+				scope.allLoading = 0
 				scope.loadingRemove()
 			}
 		}
@@ -99,23 +100,24 @@
 			link: function(scope, ele, attr) {
 				console.log("轮播图加载")
 				//控制所有请求完成状态的变量
-				scope.allLoading = 0;
+				//				scope.allLoading = 0;
 				//轮播图图片
-				scope.allLoading++;
-				scope.loadingRemove();
-				//定时器模拟加载延迟，才看得多xloading组件的效果
-				$timeout(function() {
-					$http({
-						url: "http://localhost:3000/readFile"
-					}).then(function(res) {
-						if(scope.allLoading != 0) {
-							scope.allLoading--;
-						}
-						//						console.log(res.data)
-						scope.imgArr = res.data
-					})
-
-				}, 1000)
+				//				scope.allLoading++;
+				//				scope.loadingRemove();
+				//				//定时器模拟加载延迟，才看得多xloading组件的效果
+				//				$timeout(function() {
+				//					$http({
+				//						url: "http://localhost:3000/readFile"
+				//					}).then(function(res) {
+				//						if(scope.allLoading != 0) {
+				//							scope.allLoading--;
+				//						}
+				//						//						console.log(res.data)
+				//						scope.imgArr = res.data
+				//					})
+				//
+				//				}, 1000)
+				scope.imgArr = ["images/4.jpg", "images/5.jpg", "images/1.jpg", "images/2.jpg", "images/3.jpg", "images/6.jpg", "images/7.jpg", "images/8.jpg", "images/9.jpg", "images/10.jpg"]
 
 				//轮播图驱动
 				var swiper = new Swiper('.swiper-container', {
@@ -130,7 +132,7 @@
 		}
 	}])
 	//列表组件
-	directives.directive('xlist', ['$http', '$window','$rootScope', function($http, $window,$rootScope) {
+	directives.directive('xlist', ['$http', '$window', '$rootScope', function($http, $window, $rootScope) {
 		return {
 			templateUrl: "directive/xlist.html",
 			link: function(scope, ele, attr) {
@@ -186,9 +188,9 @@
 				//后台请求数据动态生成列表
 				scope.loadMore()
 				//点击头像和用户名进入urer路由
-				scope.user=function(username){
+				scope.user = function(username) {
 					console.log(username)
-					$window.location.href="#!/user/" + username
+					$window.location.href = "#!/user/" + username
 				}
 
 			}
@@ -233,15 +235,14 @@
 		}
 	}])
 
-	
 	//侧边栏主键
-	directives.directive('xsidebar', ['$rootScope',function($rootScope) {
+	directives.directive('xsidebar', ['$rootScope', function($rootScope) {
 		return {
 			templateUrl: "directive/xsidebar.html",
 			link: function(scope, ele, attr) {
 				$rootScope.sidebarstateOut = false;
 				console.log("侧边栏加载")
-				scope.mineLeave=function(){
+				scope.mineLeave = function() {
 					$rootScope.sidebarstate = false
 					$rootScope.sidebarstateOut = true;
 				}
@@ -249,7 +250,7 @@
 			}
 		}
 	}])
-	
+
 	//about栏主键
 	directives.directive('xabout', [function() {
 		return {
@@ -291,28 +292,36 @@
 		}
 	}])
 	//mine主键
-	directives.directive('xmine', [function() {
+	directives.directive('xmine', ['$http', function($http) {
 		return {
-			templateUrl: "directive/xmine.html",
+			templateUrl: "directive/xuser.html",
 			link: function(scope, ele, attr) {
 				console.log("mine加载")
-
+				scope.username = 'as13579e'
+				$http({
+					method: 'get',
+					url: 'https://cnodejs.org/api/v1/user/' + scope.username,
+				}).then(function(res) {
+					console.log(res)
+					scope.arr = res.data.data
+					console.log(scope.arr)
+				})
 			}
 		}
 	}])
 	//xuser主键
-	directives.directive('xuser', ['$http','$state',function($http,$state) {
+	directives.directive('xuser', ['$http', '$state', function($http, $state) {
 		return {
 			templateUrl: "directive/xuser.html",
 			link: function(scope, ele, attr) {
 				console.log("xuser加载");
-				
+
 				scope.username = $state.params.username;
 				scope.num = 5;
 				$http({
-					method:'get',
-					url:'https://cnodejs.org/api/v1/user/'+scope.username,
-				}).then(function(res){
+					method: 'get',
+					url: 'https://cnodejs.org/api/v1/user/' + scope.username,
+				}).then(function(res) {
 					console.log(res)
 					scope.arr = res.data.data
 					console.log(scope.arr)
