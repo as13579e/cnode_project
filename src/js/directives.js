@@ -185,6 +185,11 @@
 				}
 				//后台请求数据动态生成列表
 				scope.loadMore()
+				//点击头像和用户名进入urer路由
+				scope.user=function(username){
+					console.log(username)
+					$window.location.href="#!/user/" + username
+				}
 
 			}
 		}
@@ -291,6 +296,27 @@
 			templateUrl: "directive/xmine.html",
 			link: function(scope, ele, attr) {
 				console.log("mine加载")
+
+			}
+		}
+	}])
+	//xuser主键
+	directives.directive('xuser', ['$http','$state',function($http,$state) {
+		return {
+			templateUrl: "directive/xuser.html",
+			link: function(scope, ele, attr) {
+				console.log("xuser加载");
+				
+				scope.username = $state.params.username;
+				scope.num = 5;
+				$http({
+					method:'get',
+					url:'https://cnodejs.org/api/v1/user/'+scope.username,
+				}).then(function(res){
+					console.log(res)
+					scope.arr = res.data.data
+					console.log(scope.arr)
+				})
 
 			}
 		}

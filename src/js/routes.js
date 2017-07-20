@@ -38,6 +38,9 @@
 		}).state('mine',{
 			url: "/mine",
 			templateUrl:'./template/mine.html'
+		}).state('user',{
+			url: "/user/:username",
+			templateUrl:'./template/user.html'
 		})
 		$urlRouterProvider.when('','/index/topics')
 		

@@ -1,20 +1,20 @@
 <div class="weui-panel__bd">
 	<a ng-repeat="items in arr |filter:{title:searchValue}" href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-		<div class="weui-media-box__hd">
-			<img ng-click="showPic(items.author.avatar_url)" class="weui-media-box__thumb" ng-src="{{items.author.avatar_url}}" alt="">
+		<div class="weui-media-box__hd" >
+			<img ng-click="user(items.author.loginname)" class="weui-media-box__thumb" ng-src="{{items.author.avatar_url}}" alt="">
 		</div>
 		<div class="channel" ng-bind-html="items.tab|channel:items.good:items.top|html">			
 		</div>
 		
 		
-		<div ng-bind-html="items.author.loginname|html" class='autorName'>
+		<div ng-click="user(items.author.loginname)" ng-bind-html="items.author.loginname|html" class='autorName'>
 			
 		</div>
 		<div ng-click="toDetail(items.id)" class="weui-media-box__bd">
 			<h4 class="weui-media-box__title">{{items.title|ellipsis}}</h4>
 			<p class="weui-media-box__desc repCount">
 				<span>查看/回复： </span>
-				<sapn title="回复数">{{items.reply_count}}</sapn>
+				<span title="回复数">{{items.reply_count}}</span>
 				<span title="点击数">{{"/"+items.visit_count}}</span>
 				<span class="lastTime" title="最后回复时间">最后回复:{{items.last_reply_at|lastReplyTime}}</span>
 			</p>

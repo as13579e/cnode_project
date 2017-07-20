@@ -36,11 +36,11 @@
 		<div ng-repeat="items in detailData.replies track by $index" class="cell reply_area reply_item
   " reply_id="{{items.id}}" reply_to_id="" id="{{items.id}}">
 			<div class="author_content">
-				<a href="/user/Rwing" class="user_avatar">
+				<a ng-href="{{'#!/user/'+items.author.loginname}}" class="user_avatar">
 					<img ng-src="{{items.author.avatar_url}}" title="Rwing"></a>
 
 				<div class="user_info">
-					<a ng-bind-html="items.author.loginname|html" class="dark reply_author" href="/user/Rwing"></a>
+					<a ng-bind-html="items.author.loginname|html" class="dark reply_author" href="{{'#!/user/'+items.author.loginname}}"></a>
 					<a class="reply_time" href="#59632b6610d696af07768b40">{{$index+1}}楼•{{items.create_at|lastReplyTime}}</a>
 				</div>
 				<div class="user_action">
