@@ -8,7 +8,7 @@
 			link: function(scope, ele, attr) {
 				//				头部的图片
 				console.log("header加载")
-				scope.headerImg = "//o4j806krb.qnssl.com/public/images/cnodejs_light.svg"
+				scope.headerImg = "./images/nodejs.png"
 
 				//返回上一个页面
 				scope.back = function() {
